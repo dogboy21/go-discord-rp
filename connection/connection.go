@@ -111,5 +111,11 @@ func Handshake(appId string) {
 func SetActivity(state, details, smallImg, smallText, largeImg, largeText string) {
 	pid := os.Getpid()
 	activity := "{\"cmd\": \"SET_ACTIVITY\", \"args\":{\"pid\": %d, \"activity\": {\"state\": \"%s\", \"details\": \"%s\", \"instance\": true, \"assets\": {\"small_image\": \"%s\", \"small_text\": \"%s\", \"large_image\": \"%s\", \"large_text\": \"%s\"}}}, \"nonce\": \"%s\"}"
-	SendFramed(1, fmt.Sprintf(activity, pid, state, details, smallImg, smallText, largeImg, largeText))
+	SendFramed(1, fmt.Sprintf(activity, pid, state, details, smallImg, smallText, largeImg, largeText, getNonce()))
+}
+
+func SetActivityText(state, details string) {
+	pid := os.Getpid()
+	activity := "{\"cmd\": \"SET_ACTIVITY\", \"args\":{\"pid\": %d, \"activity\": {\"state\": \"%s\", \"details\": \"%s\", \"instance\": true}}, \"nonce\": \"%s\"}"
+	SendFramed(1, fmt.Sprintf(activity, pid, state, details, getNonce()))
 }
